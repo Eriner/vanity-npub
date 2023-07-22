@@ -6,7 +6,7 @@ A vanity prefix bech-32 nostr generator.
 
 Do you want a nostr public key like: 
 
-> npub1**swag**7ws4yul24p0pf7cacn7cghqkutdnm35z075vy68ggqpqjcyswn8ekc?
+npub1**swag**7ws4yul24p0pf7cacn7cghqkutdnm35z075vy68ggqpqjcyswn8ekc?
 
 If so, this is the tool for you.
 
