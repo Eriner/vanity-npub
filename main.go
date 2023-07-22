@@ -3,21 +3,15 @@ package main
 
 import (
 	"context"
-	"encoding/hex"
 	"fmt"
-	"io"
 	"log"
-	"math/big"
 	"os"
 	"runtime"
 	"strings"
-	"sync"
 	"time"
 
-	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/nbd-wtf/go-nostr"
 	"github.com/nbd-wtf/go-nostr/nip19"
-	"lukechampine.com/frand"
 )
 
 func main() {
@@ -49,8 +43,8 @@ func main() {
 			case <-ctx.Done():
 				return
 			default:
-				i++ // race, but no big deal
-				sk := GenerateFastPrivateKey()
+				i++                            // race, but no big deal
+				sk := GenerateFastPrivateKey() // custom implementation (with CSPRNG) w/ ~+100% performance
 				pk, _ := nostr.GetPublicKey(sk)
 				npub, _ := nip19.EncodePublicKey(pk)
 				if strings.HasPrefix(npub, desiredPrefix) {
@@ -75,26 +69,4 @@ func main() {
 	fmt.Println("pk:", pk)
 	fmt.Println(nsec)
 	fmt.Println(npub)
-}
-
-var params = btcec.S256().Params()
-var one = new(big.Int).SetInt64(1)
-var poolBytes = sync.Pool{New: func() any { return [256/8 + 8]byte{} }}
-var poolBigInt = sync.Pool{New: func() any { return new(big.Int) }}
-
-func GenerateFastPrivateKey() string {
-	b := poolBytes.Get().([256/8 + 8]byte)
-	defer poolBytes.Put(b)
-	if _, err := io.ReadFull(frand.Reader, b[:]); err != nil {
-		return ""
-	}
-	//k := new(big.Int).SetBytes(b[:])
-	//n := new(big.Int).Sub(params.N, one)
-	k := poolBigInt.Get().(*big.Int).SetBytes(b[:])
-	n := poolBigInt.Get().(*big.Int).Sub(params.N, one)
-	defer poolBigInt.Put(k)
-	defer poolBigInt.Put(n)
-	k.Mod(k, n)
-	k.Add(k, one)
-	return hex.EncodeToString(k.Bytes())
 }
