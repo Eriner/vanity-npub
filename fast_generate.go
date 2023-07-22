@@ -25,7 +25,7 @@ func GenerateFastPrivateKey() string {
 	k.Mod(k, n)
 	k.Add(k, one)
 	poolBytes.Put(b)
-	poolBigInt.Put(k)
 	poolBigInt.Put(n)
+	defer poolBigInt.Put(k)
 	return hex.EncodeToString(k.Bytes())
 }
