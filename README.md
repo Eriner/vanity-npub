@@ -34,10 +34,10 @@ The benchmarks below show an approximate 2x speed increase while maintaining the
 % go test -bench=.
 goos: linux
 goarch: amd64
-pkg: github.com/eriner/vanity_nip
+pkg: github.com/eriner/vanity-npub
 cpu: AMD Ryzen 7 2700X Eight-Core Processor         
 BenchmarkGeneratePrivateKey-16        	 499538	     2073 ns/op
 BenchmarkGenerateFastPrivateKey-16    	1085912	     1146 ns/op
 PASS
-ok  	github.com/eriner/vanity_nip	3.240s
+ok  	github.com/eriner/vanity-npub	3.240s
 ```
