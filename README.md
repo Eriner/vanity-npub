@@ -13,7 +13,7 @@ If so, this is the tool for you.
 ## How
 
 ```
-$ go install https://github.com/eriner/vanity_npub
+$ go install github.com/eriner/vanity-npub
 
 $ vanity_npub swag
 ```
